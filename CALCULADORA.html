@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Suma de Productos Vendidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .logo {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .buttons div {
+            flex: 1 1 30%;
+            margin: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        li:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .shipping {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .shipping input {
+            width: 100px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="Logo" class="logo"> 
+        <h2>Calculadora de Suma de Productos Vendidos</h2>
+        <div class="buttons">
+            <div><button onclick="addProduct(1, 5800)">Gomu-Gomu SIMPLE $5800</button></div>
+            <div><button onclick="addProduct(1, 6800)">Gomu-Gomu DOBLE $6800</button></div>
+            <div><button onclick="addProduct(1, 8300)">Gomu-Gomu TRIPLE $8300</button></div>
+            <div><button onclick="addProduct(1, 6000)">Lucy SIMPLE $6000</button></div>
+            <div><button onclick="addProduct(1, 6900)">Lucy DOBLE $6900</button></div>
+            <div><button onclick="addProduct(1, 8400)">Lucy TRIPLE $8400</button></div>
+            <div><button onclick="addProduct(1, 4800)">Ssj SIMPLE $4800</button></div>
+            <div><button onclick="addProduct(1, 5500)">Ssj DOBLE $5500</button></div>
+            <div><button onclick="addProduct(1, 6600)">Ssj TRIPLE $6600</button></div>
+            <div><button onclick="addProduct(1, 6000)">Ned Flanders SIMPLE $6000</button></div>
+            <div><button onclick="addProduct(1, 6500)">Ned Flanders DOBLE $6500</button></div>
+            <div><button onclick="addProduct(1, 8800)">Ned Flanders TRIPLE $8800</button></div>
+            <div><button onclick="addProduct(1, 5600)">Zuko SIMPLE $5600</button></div>
+            <div><button onclick="addProduct(1, 6500)">Zuko DOBLE $6500</button></div>
+            <div><button onclick="addProduct(1, 7800)">Zuko TRIPLE $7800</button></div>
+        </div>
+        <div class="shipping">
+            <label for="distance">Distancia (km):</label>
+            <input type="number" id="distance" min="0" value="0" oninput="calculateTotal()">
+        </div>
+        <button onclick="calculateTotal()">Calcular Total</button>
+        <ul id="productList"></ul>
+        <div class="total" id="total">Total: $0.00</div>
+    </div>
+    <script>
+        const products = [];
+
+        function addProduct(quantity, price) {
+            products.push({ quantity, price });
+            updateProductList();
+        }
+
+        function updateProductList() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach((product, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `Producto ${index + 1}: <span>Cantidad: ${product.quantity}, Precio: $${product.price}</span>`;
+                productList.appendChild(li);
+            });
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            products.forEach(product => {
+                total += product.quantity * product.price;
+            });
+            const distance = document.getElementById('distance').value;
+            const shippingCost = distance * 200;
+            total += shippingCost;
+            document.getElementById('total').innerText = `Total: $${total.toFixed(2)} (incluye envío de $${shippingCost.toFixed(2)})`;
+        }
+    </script>
+</body>
+</html>
+
